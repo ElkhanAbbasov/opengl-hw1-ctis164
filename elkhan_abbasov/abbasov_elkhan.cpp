@@ -99,19 +99,19 @@ void vprint2(int x, int y, float size, const char* string, ...) {
 }
 
 void drawWallpaper() {
-	// Set background color (wall) - RGB(134, 108, 108)
-	glClearColor(134.0 / 255, 108.0 / 255, 108.0 / 255, 1);
+	// Set background color
+	glClearColor(166.0 / 255, 156.0 / 255, 145.0 / 255, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	// Set line color (brick lines) - RGB(71, 54, 54)
+	// Set line color 
 	glColor3f(71.0 / 255, 54.0 / 255, 54.0 / 255);
 	glLineWidth(2);
 
 	glBegin(GL_LINES);
-	// Draw horizontal brick lines
-	for (int y = -300; y <= 300; y += 50) {
-		glVertex2f(-400, y);
-		glVertex2f(400, y);
+	// Draw horizontal lines that scale with window height (resize immune)
+	for (int y = -winHeight / 2; y <= winHeight / 2; y += 50) {
+		glVertex2f(-winWidth / 2, y);
+		glVertex2f(winWidth / 2, y);
 	}
 	glEnd();
 }
@@ -121,6 +121,48 @@ void display() {
 	// Clear window to black
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	//Wallpaper & lines
+	drawWallpaper();
+
+	//Draw Label (with text)
+
+		//Circle
+			glColor3f(0, 0, 0);
+			circle(0, 250, 10);  // radius 50
+		//Strings
+			glColor3f(0, 0, 0);
+			glBegin(GL_LINES);
+				glVertex2f(0, 250);
+				glVertex2f(-250, 200);
+				glVertex2f(0, 250);
+				glVertex2f(250, 200);
+			glEnd();
+
+		//Frame 1
+			glColor3f(91.0 / 255, 52.0 / 255, 13.0 / 255);
+			glBegin(GL_QUADS);
+				glVertex2f(-250, 200);
+				glVertex2f(250, 200);
+				glVertex2f(250, 150);
+				glVertex2f(-250, 150);
+			glEnd();
+
+		//Frame 2
+			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255); 
+			glBegin(GL_QUADS);
+				glVertex2f(-240, 190); 
+				glVertex2f(240, 190);
+				glVertex2f(240, 160);
+				glVertex2f(-240, 160);
+			glEnd();
+
+		//Text
+			glColor3f(1.0, 1.0, 1.0); 
+			vprint(-135, 170, GLUT_BITMAP_9_BY_15, "Press Space Button to See Aliens :)");
+
+
+
 
 	glutSwapBuffers();
 }
