@@ -117,18 +117,68 @@ void drawWallpaper() {
 }
 
 void drawFlowerWithStem(float x, float stemBottom, float r, float red, float green, float blue) {
-	// Draw Stem (Dark Green)
+	//Stem
 	glColor3f(0.0, 80.0 / 255, 0.0);
 	glLineWidth(2);
 	glBegin(GL_LINES);
-	glVertex2f(x, stemBottom);   // Bottom of stem (controlled externally)
-	glVertex2f(x, stemBottom + 20); // Fixed length stem
+	glVertex2f(x, stemBottom); 
+	glVertex2f(x, stemBottom + 20); 
 	glEnd();
 
 	// Draw Flower Head
 	glColor3f(red, green, blue);
-	circle(x, stemBottom + 25, r); // Flower sits 5px above the stem
+	circle(x, stemBottom + 25, r); 
 }
+
+// UFO Position
+float ufoX = 0;  // UFO center left/right 
+float ufoY = 0; // up/down
+
+// Draw UFO (Pixelated)
+void drawUFO() {
+	
+	// Top Dome
+	glColor3f(0.6, 0.9, 1.0);
+	glBegin(GL_QUADS);
+		glVertex2f(ufoX - 30, ufoY);
+		glVertex2f(ufoX + 30, ufoY);
+		glVertex2f(ufoX + 15, ufoY + 10);
+		glVertex2f(ufoX - 15, ufoY + 10);
+	glEnd();
+
+	// Main Body
+	glColor3f(0.5, 0.7, 0.9);
+	glBegin(GL_QUADS);
+		glVertex2f(ufoX - 40, ufoY);
+		glVertex2f(ufoX + 40, ufoY);
+		glVertex2f(ufoX + 50, ufoY - 10);
+		glVertex2f(ufoX - 50, ufoY - 10);
+	glEnd();
+
+	// Yellow Lights
+	glColor3f(1.0, 1.0, 0.0);
+	for (int i = -30; i <= 30; i += 15) {
+		glBegin(GL_QUADS);
+		glVertex2f(ufoX + i - 3, ufoY - 3);
+		glVertex2f(ufoX + i + 3, ufoY - 3);
+		glVertex2f(ufoX + i + 3, ufoY - 6);
+		glVertex2f(ufoX + i - 3, ufoY - 6);
+		glEnd();
+	}
+
+	// Bottom Gray
+	glColor3f(0.2, 0.3, 0.4);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 30, ufoY - 10);
+	glVertex2f(ufoX + 30, ufoY - 10);
+	glVertex2f(ufoX + 20, ufoY - 15);
+	glVertex2f(ufoX - 20, ufoY - 15);
+	glEnd();
+
+	
+}
+
+
 
 
 
@@ -287,19 +337,78 @@ void display() {
 			glVertex2f(259, -105);
 			glEnd();
 
-			// Add flowers with manually set heights
-			drawFlowerWithStem(-230, -135, 5, 1.0, 0.5, 0.8);  // Pink (Higher)
-			drawFlowerWithStem(-180, -150, 5, 1.0, 1.0, 0.0);  // Yellow (Lower)
-			drawFlowerWithStem(-120, -140, 5, 0.6, 0.2, 0.8);  // Purple (Middle)
-			drawFlowerWithStem(-60, -155, 5, 1.0, 0.5, 0.8);   // Pink (Lowest)
-			drawFlowerWithStem(0, -145, 5, 1.0, 1.0, 0.0);     // Yellow (Middle)
-			drawFlowerWithStem(60, -132, 5, 0.6, 0.2, 0.8);    // Purple (Higher)
-			drawFlowerWithStem(120, -155, 5, 1.0, 0.5, 0.8);   // Pink (Lowest)
-			drawFlowerWithStem(180, -140, 5, 1.0, 1.0, 0.0);   // Yellow (Middle)
-			drawFlowerWithStem(230, -145, 5, 0.6, 0.2, 0.8);   // Purple (Middle)
+			// Add flowers 
+			drawFlowerWithStem(-230, -135, 5, 1.0, 0.5, 0.8);  
+			drawFlowerWithStem(-180, -150, 5, 1.0, 1.0, 0.0);  
+			drawFlowerWithStem(-120, -140, 5, 0.6, 0.2, 0.8);  
+			drawFlowerWithStem(-60, -155, 5, 1.0, 0.5, 0.8);   
+			drawFlowerWithStem(0, -145, 5, 1.0, 1.0, 0.0);     
+			drawFlowerWithStem(60, -132, 5, 0.6, 0.2, 0.8);    
+			drawFlowerWithStem(120, -155, 5, 1.0, 0.5, 0.8);   
+			drawFlowerWithStem(180, -140, 5, 1.0, 1.0, 0.0);   
+			drawFlowerWithStem(230, -145, 5, 0.6, 0.2, 0.8);   
 
 
-			
+			// Cow 
+			glColor3f(1.0, 1.0, 1.0);  // White body
+			glBegin(GL_QUADS);
+			glVertex2f(90, -110); glVertex2f(110, -110);
+			glVertex2f(110, -90); glVertex2f(90, -90);
+			glEnd();
+
+			glColor3f(0.0, 0.0, 0.0);  // Black spots
+			glBegin(GL_QUADS);
+			glVertex2f(95, -105); glVertex2f(98, -105);
+			glVertex2f(98, -102); glVertex2f(95, -102);
+			glEnd();
+
+			glBegin(GL_QUADS);
+			glVertex2f(102, -100); glVertex2f(105, -100);
+			glVertex2f(105, -97); glVertex2f(102, -97);
+			glEnd();
+
+			glColor3f(1.0, 1.0, 1.0);  // Head
+			glBegin(GL_QUADS);
+			glVertex2f(112, -107); glVertex2f(122, -107);
+			glVertex2f(122, -97); glVertex2f(112, -97);
+			glEnd();
+
+			glColor3f(0.0, 0.0, 0.0);  // Eyes
+			glBegin(GL_QUADS);
+			glVertex2f(114, -103); glVertex2f(116, -103);
+			glVertex2f(116, -101); glVertex2f(114, -101);
+			glEnd();
+
+			glBegin(GL_QUADS);
+			glVertex2f(118, -103); glVertex2f(120, -103);
+			glVertex2f(120, -101); glVertex2f(118, -101);
+			glEnd();
+
+			glColor3f(1.0, 0.5, 0.5); // Pink nose
+			glBegin(GL_QUADS);
+			glVertex2f(115, -100); glVertex2f(119, -100);
+			glVertex2f(119, -96); glVertex2f(115, -96); 
+			glEnd();
+
+			glColor3f(0.0, 0.0, 0.0);  // Legs
+			glBegin(GL_QUADS);
+			glVertex2f(92, -115); glVertex2f(95, -115);
+			glVertex2f(95, -110); glVertex2f(92, -110);
+			glEnd();
+
+			glBegin(GL_QUADS);
+			glVertex2f(108, -115); glVertex2f(110, -115);
+			glVertex2f(110, -110); glVertex2f(108, -110);
+			glEnd();
+
+
+			// UFO
+			drawUFO();
+
+
+
+
+
 
 			glutSwapBuffers();
 
