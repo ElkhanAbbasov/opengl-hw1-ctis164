@@ -325,6 +325,54 @@ void drawUFO() {
 }
 
 
+void drawStars() {
+	glColor3f(1.0, 1.0, 1.0);
+	glPointSize(2); 
+
+	glBegin(GL_POINTS);
+	glVertex2f(-250, 30);
+	glVertex2f(-200, 5);
+	glVertex2f(-150, 37);
+	glVertex2f(-100, 18);
+	glVertex2f(-50, 15);
+	glVertex2f(0, 31);
+	glVertex2f(50, 18);
+	glVertex2f(100, 24);
+	glVertex2f(150, 29);
+	glVertex2f(200, 5);
+	glVertex2f(250, 22);
+	glVertex2f(-225, -9);
+	glVertex2f(225, 9);
+	glVertex2f(175, 23);
+	glVertex2f(-230, -35);
+	glVertex2f(-180, -25);
+	glVertex2f(-130, -40);
+	glVertex2f(-80, -30);
+	glVertex2f(-30, -45);
+	glVertex2f(20, -35);
+	glVertex2f(70, -50);
+	glVertex2f(120, -38);
+	glVertex2f(170, -42);
+	glVertex2f(220, -33);
+	glVertex2f(250, -55);
+	glVertex2f(-200, -60);
+	glVertex2f(-150, -50);
+	glVertex2f(-100, -65);
+	glVertex2f(-50, -55);
+	glVertex2f(0, -70);
+	glVertex2f(50, -60);
+	glVertex2f(100, -75);
+	glVertex2f(150, -65);
+	glVertex2f(200, -80);
+	glEnd();
+}
+
+
+
+
+
+
+
 // To display onto window using OpenGL commands
 void display() {
 	// Clear window to black
@@ -491,15 +539,14 @@ void display() {
 			drawFlowerWithStem(180, -140, 5, 1.0, 1.0, 0.0);   
 			drawFlowerWithStem(230, -145, 5, 0.6, 0.2, 0.8);   
 
-
 			// Cow 
 			drawCow();
 
-
-			// UFO
+			// UFO & Alien
 			drawUFO();
 
-
+			//Stars
+			drawStars();
 
 
 
