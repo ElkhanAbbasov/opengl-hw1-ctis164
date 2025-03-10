@@ -130,11 +130,155 @@ void drawFlowerWithStem(float x, float stemBottom, float r, float red, float gre
 	circle(x, stemBottom + 25, r); 
 }
 
+void drawCow() {
+	glColor3f(1.0, 1.0, 1.0);  // White body
+	glBegin(GL_QUADS);
+	glVertex2f(90, -110); 
+	glVertex2f(110, -110);
+	glVertex2f(110, -93); 
+	glVertex2f(90, -93);
+	glEnd();
+
+	glColor3f(0.0, 0.0, 0.0);  // Black spots
+
+	glBegin(GL_QUADS); // spot 1
+	glVertex2f(95, -105); 
+	glVertex2f(98, -105);
+	glVertex2f(98, -102); 
+	glVertex2f(95, -102);
+	glEnd();
+
+	glBegin(GL_QUADS); // spot2
+	glVertex2f(102, -100); 
+	glVertex2f(105, -100);
+	glVertex2f(105, -97); 
+	glVertex2f(102, -97);
+	glEnd(); 
+
+	glBegin(GL_QUADS); //spot 3
+	glVertex2f(99, -105);
+	glVertex2f(101, -105);
+	glVertex2f(101, -102);
+	glVertex2f(99, -102);
+	glEnd();
+
+	glColor3f(1.0, 1.0, 1.0);  // Head
+	glBegin(GL_QUADS);
+	glVertex2f(112, -107); glVertex2f(122, -107);
+	glVertex2f(122, -97); glVertex2f(112, -97);
+	glEnd();
+
+	glColor3f(0.0, 0.0, 0.0);  // Eyes
+	glBegin(GL_QUADS);
+	glVertex2f(114, -103); glVertex2f(116, -103);
+	glVertex2f(116, -101); glVertex2f(114, -101);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(118, -103); glVertex2f(120, -103);
+	glVertex2f(120, -101); glVertex2f(118, -101);
+	glEnd();
+
+	glColor3f(1.0, 0.5, 0.5); // Pink nose
+	glBegin(GL_QUADS);
+	glVertex2f(116, -108); 
+	glVertex2f(120, -108);
+	glVertex2f(120, -104); 
+	glVertex2f(116, -104);
+	glEnd();
+
+	glColor3f(0.0, 0.0, 0.0);  // Legs
+	glBegin(GL_QUADS);
+	glVertex2f(92, -115); glVertex2f(95, -115);
+	glVertex2f(95, -110); glVertex2f(92, -110);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(108, -115); glVertex2f(110, -115);
+	glVertex2f(110, -110); glVertex2f(108, -110);
+	glEnd();
+}
+
 // UFO Position
 float ufoX = 0;  // UFO center left/right 
 float ufoY = 0; // up/down
 
-// Draw UFO (Pixelated)
+void drawAlien() {
+	// Head
+	glColor3f(0.2, 0.8, 0.2);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 10, ufoY + 2);
+	glVertex2f(ufoX + 10, ufoY + 2);
+	glVertex2f(ufoX + 10, ufoY + 12);
+	glVertex2f(ufoX - 10, ufoY + 12);
+	glEnd();
+
+	// Dark Green
+	glColor3f(0.1, 0.6, 0.1);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 10, ufoY + 2);
+	glVertex2f(ufoX - 7, ufoY + 2);
+	glVertex2f(ufoX - 7, ufoY + 12);
+	glVertex2f(ufoX - 10, ufoY + 12);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX + 7, ufoY + 2);
+	glVertex2f(ufoX + 10, ufoY + 2);
+	glVertex2f(ufoX + 10, ufoY + 12);
+	glVertex2f(ufoX + 7, ufoY + 12);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 7, ufoY + 11);  
+	glVertex2f(ufoX + 7, ufoY + 11);  
+	glVertex2f(ufoX + 7, ufoY + 14);  
+	glVertex2f(ufoX - 7, ufoY + 14);  
+	glEnd();
+
+	// Eyes 
+	glColor3f(0.0, 0.0, 0.0);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 6, ufoY + 5);
+	glVertex2f(ufoX - 3, ufoY + 5);
+	glVertex2f(ufoX - 3, ufoY + 9);
+	glVertex2f(ufoX - 6, ufoY + 9);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX + 3, ufoY + 5);
+	glVertex2f(ufoX + 6, ufoY + 5);
+	glVertex2f(ufoX + 6, ufoY + 9);
+	glVertex2f(ufoX + 3, ufoY + 9);
+	glEnd();
+
+	// White Eye 
+	glColor3f(1.0, 1.0, 1.0);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 5, ufoY + 8);
+	glVertex2f(ufoX - 4, ufoY + 8);
+	glVertex2f(ufoX - 4, ufoY + 7);
+	glVertex2f(ufoX - 5, ufoY + 7);
+	glEnd();
+
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX + 4, ufoY + 8);
+	glVertex2f(ufoX + 5, ufoY + 8);
+	glVertex2f(ufoX + 5, ufoY + 7);
+	glVertex2f(ufoX + 4, ufoY + 7);
+	glEnd();
+
+	// Mouth
+	glColor3f(0.0, 0.0, 0.0);
+	glBegin(GL_QUADS);
+	glVertex2f(ufoX - 3, ufoY + 3);
+	glVertex2f(ufoX + 3, ufoY + 3);
+	glVertex2f(ufoX + 3, ufoY + 4);
+	glVertex2f(ufoX - 3, ufoY + 4);
+	glEnd();
+}
+
+// Draw UFO 
 void drawUFO() {
 	
 	// Top Dome
@@ -142,9 +286,11 @@ void drawUFO() {
 	glBegin(GL_QUADS);
 		glVertex2f(ufoX - 30, ufoY);
 		glVertex2f(ufoX + 30, ufoY);
-		glVertex2f(ufoX + 15, ufoY + 10);
-		glVertex2f(ufoX - 15, ufoY + 10);
+		glVertex2f(ufoX + 15, ufoY + 15);
+		glVertex2f(ufoX - 15, ufoY + 15);
 	glEnd();
+
+	drawAlien();
 
 	// Main Body
 	glColor3f(0.5, 0.7, 0.9);
@@ -177,9 +323,6 @@ void drawUFO() {
 
 	
 }
-
-
-
 
 
 // To display onto window using OpenGL commands
@@ -350,56 +493,7 @@ void display() {
 
 
 			// Cow 
-			glColor3f(1.0, 1.0, 1.0);  // White body
-			glBegin(GL_QUADS);
-			glVertex2f(90, -110); glVertex2f(110, -110);
-			glVertex2f(110, -90); glVertex2f(90, -90);
-			glEnd();
-
-			glColor3f(0.0, 0.0, 0.0);  // Black spots
-			glBegin(GL_QUADS);
-			glVertex2f(95, -105); glVertex2f(98, -105);
-			glVertex2f(98, -102); glVertex2f(95, -102);
-			glEnd();
-
-			glBegin(GL_QUADS);
-			glVertex2f(102, -100); glVertex2f(105, -100);
-			glVertex2f(105, -97); glVertex2f(102, -97);
-			glEnd();
-
-			glColor3f(1.0, 1.0, 1.0);  // Head
-			glBegin(GL_QUADS);
-			glVertex2f(112, -107); glVertex2f(122, -107);
-			glVertex2f(122, -97); glVertex2f(112, -97);
-			glEnd();
-
-			glColor3f(0.0, 0.0, 0.0);  // Eyes
-			glBegin(GL_QUADS);
-			glVertex2f(114, -103); glVertex2f(116, -103);
-			glVertex2f(116, -101); glVertex2f(114, -101);
-			glEnd();
-
-			glBegin(GL_QUADS);
-			glVertex2f(118, -103); glVertex2f(120, -103);
-			glVertex2f(120, -101); glVertex2f(118, -101);
-			glEnd();
-
-			glColor3f(1.0, 0.5, 0.5); // Pink nose
-			glBegin(GL_QUADS);
-			glVertex2f(115, -100); glVertex2f(119, -100);
-			glVertex2f(119, -96); glVertex2f(115, -96); 
-			glEnd();
-
-			glColor3f(0.0, 0.0, 0.0);  // Legs
-			glBegin(GL_QUADS);
-			glVertex2f(92, -115); glVertex2f(95, -115);
-			glVertex2f(95, -110); glVertex2f(92, -110);
-			glEnd();
-
-			glBegin(GL_QUADS);
-			glVertex2f(108, -115); glVertex2f(110, -115);
-			glVertex2f(110, -110); glVertex2f(108, -110);
-			glEnd();
+			drawCow();
 
 
 			// UFO
