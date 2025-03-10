@@ -116,6 +116,22 @@ void drawWallpaper() {
 	glEnd();
 }
 
+void drawFlowerWithStem(float x, float stemBottom, float r, float red, float green, float blue) {
+	// Draw Stem (Dark Green)
+	glColor3f(0.0, 80.0 / 255, 0.0);
+	glLineWidth(2);
+	glBegin(GL_LINES);
+	glVertex2f(x, stemBottom);   // Bottom of stem (controlled externally)
+	glVertex2f(x, stemBottom + 20); // Fixed length stem
+	glEnd();
+
+	// Draw Flower Head
+	glColor3f(red, green, blue);
+	circle(x, stemBottom + 25, r); // Flower sits 5px above the stem
+}
+
+
+
 // To display onto window using OpenGL commands
 void display() {
 	// Clear window to black
@@ -139,7 +155,7 @@ void display() {
 				glVertex2f(250, 200);
 			glEnd();
 
-		//Frame 1
+			// Frame 1 (Outer)
 			glColor3f(91.0 / 255, 52.0 / 255, 13.0 / 255);
 			glBegin(GL_QUADS);
 				glVertex2f(-250, 200);
@@ -148,23 +164,145 @@ void display() {
 				glVertex2f(-250, 150);
 			glEnd();
 
-		//Frame 2
-			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255); 
+			// Outline for Frame 1
+			glColor3f(0, 0, 0); 
+			glLineWidth(3);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-250, 200);
+				glVertex2f(250, 200);
+				glVertex2f(250, 150);
+				glVertex2f(-250, 150);
+			glEnd();
+
+			// Frame 2 (Inner)
+			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255);
 			glBegin(GL_QUADS);
-				glVertex2f(-240, 190); 
+				glVertex2f(-240, 190);
 				glVertex2f(240, 190);
 				glVertex2f(240, 160);
 				glVertex2f(-240, 160);
 			glEnd();
 
-		//Text
-			glColor3f(1.0, 1.0, 1.0); 
+			// Outline for Frame 2
+			glColor3f(0, 0, 0); 
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-240, 190);
+				glVertex2f(240, 190);
+				glVertex2f(240, 160);
+				glVertex2f(-240, 160);
+			glEnd();
+
+			// Text
+			glColor3f(1.0, 1.0, 1.0);
 			vprint(-135, 170, GLUT_BITMAP_9_BY_15, "Press Space Button to See Aliens :)");
 
+			// Window 1
+			glColor3f(61.0 / 255, 35.0 / 255, 9.0 / 255);
+			glBegin(GL_QUADS);
+				glVertex2f(-300, -200);
+				glVertex2f(300, -200);
+				glVertex2f(300, 100);
+				glVertex2f(-300, 100);
+			glEnd();
+
+			// Outline for Window 1
+			glColor3f(0, 0, 0); 
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-300, -200);
+				glVertex2f(300, -200);
+				glVertex2f(300, 100);
+				glVertex2f(-300, 100);
+			glEnd();
+
+			// Window 2
+			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255);
+			glBegin(GL_QUADS);
+				glVertex2f(-275, -175);
+				glVertex2f(275, -175);
+				glVertex2f(275, 75);
+				glVertex2f(-275, 75);
+			glEnd();
+
+			// Outline for Window 2
+			glColor3f(0, 0, 0); 
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-275, -175);
+				glVertex2f(275, -175);
+				glVertex2f(275, 75);
+				glVertex2f(-275, 75);
+			glEnd();
+
+			//Outline for Main Objects
+			glColor3f(0, 0, 0);
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-260, -160);
+				glVertex2f(260, -160);
+				glVertex2f(260, 60);
+				glVertex2f(-260, 60);
+			glEnd();
+
+			// Dark Night Theme Gradient Background
+			glBegin(GL_QUADS);
+				glColor3f(20.0 / 255, 20.0 / 255, 90.0 / 255);  // Top
+				glVertex2f(-260, 60);
+				glVertex2f(260, 60);
+
+				glColor3f(19.0 / 255, 19.0 / 255, 26.0 / 255);  // Bottom
+				glVertex2f(260, -160);
+				glVertex2f(-260, -160);
+			glEnd();
+
+			//Outline for  dark night
+			glColor3f(0, 0, 0); 
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+				glVertex2f(-260, 60);   
+				glVertex2f(260, 60);    
+				glVertex2f(260, -160);  
+				glVertex2f(-260, -160); 
+			glEnd();
+
+			// Grass
+			glColor3f(0, 111.0 / 255, 0);
+			glBegin(GL_QUADS);
+				glVertex2f(-259, -160); 
+				glVertex2f(259, -160);  
+				glVertex2f(259, -105);  
+				glVertex2f(-259, -105); 
+			glEnd();
+
+			//Grass outline
+			glColor3f(0, 0, 0); 
+			glLineWidth(2);
+			glBegin(GL_LINES);
+			// Bottom 
+			glVertex2f(-259, -160);
+			glVertex2f(259, -160);
+			// Top 
+			glVertex2f(-259, -105);
+			glVertex2f(259, -105);
+			glEnd();
+
+			// Add flowers with manually set heights
+			drawFlowerWithStem(-230, -135, 5, 1.0, 0.5, 0.8);  // Pink (Higher)
+			drawFlowerWithStem(-180, -150, 5, 1.0, 1.0, 0.0);  // Yellow (Lower)
+			drawFlowerWithStem(-120, -140, 5, 0.6, 0.2, 0.8);  // Purple (Middle)
+			drawFlowerWithStem(-60, -155, 5, 1.0, 0.5, 0.8);   // Pink (Lowest)
+			drawFlowerWithStem(0, -145, 5, 1.0, 1.0, 0.0);     // Yellow (Middle)
+			drawFlowerWithStem(60, -132, 5, 0.6, 0.2, 0.8);    // Purple (Higher)
+			drawFlowerWithStem(120, -155, 5, 1.0, 0.5, 0.8);   // Pink (Lowest)
+			drawFlowerWithStem(180, -140, 5, 1.0, 1.0, 0.0);   // Yellow (Middle)
+			drawFlowerWithStem(230, -145, 5, 0.6, 0.2, 0.8);   // Purple (Middle)
 
 
+			
 
-	glutSwapBuffers();
+			glutSwapBuffers();
+
 }
 
 // Key function for ASCII charachters like ESC, a,b,c..,A,B,..Z
