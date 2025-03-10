@@ -1,10 +1,10 @@
-/**********************************
+﻿/**********************************
  CTIS164 - Template Source Program
 -----------------------------------
-NAME SURNAME :
-STUDENT ID :
-SECTION :
-HOMEWORK :
+NAME SURNAME : Elkhan Abbasov
+STUDENT ID : 22101458
+SECTION :  3
+HOMEWORK : 1
 -----------------------------------
 PROBLEMS :
 -----------------------------------
@@ -25,13 +25,19 @@ ADDITIONAL FEATURES :
 #define WINDOW_WIDTH  800
 #define WINDOW_HEIGHT 600
 #define TIMER_PERIOD  1000 // Period for the timer.
-#define TIMER_ON         0 // 0:Disable timer, 1:Enable timer
+#define TIMER_ON         1 // 0:Disable timer, 1:Enable timer
 #define D2R 0.017453292
 #define PI 3.141592654
 
 // Global Variables for Template File
 bool up = false, down = false, right = false, left = false;
 int  winWidth, winHeight; // Current Window width and height
+// UFO Position
+float ufoX = 0;  // UFO center left/right 
+float ufoY = 0; // up/down
+float ufoSpeedX = 30;
+bool ufoMoving = false; 
+
 
 // To draw a filled circle, centered at (x,y) with radius r
 void circle(int x, int y, int r) {
@@ -199,9 +205,7 @@ void drawCow() {
 	glEnd();
 }
 
-// UFO Position
-float ufoX = 0;  // UFO center left/right 
-float ufoY = 0; // up/down
+
 
 void drawAlien() {
 	// Head
@@ -324,7 +328,7 @@ void drawUFO() {
 	
 }
 
-
+// Stars
 void drawStars() {
 	glColor3f(1.0, 1.0, 1.0);
 	glPointSize(2); 
@@ -366,12 +370,6 @@ void drawStars() {
 	glVertex2f(200, -80);
 	glEnd();
 }
-
-
-
-
-
-
 
 // To display onto window using OpenGL commands
 void display() {
@@ -561,6 +559,10 @@ void onKeyDown(unsigned char key, int x, int y) {
 	if (key == 27)
 		exit(0);
 
+	if (key == ' ') {
+		ufoMoving = !ufoMoving;
+	}
+
 	// To refresh the window it calls display() function
 	glutPostRedisplay();
 }
@@ -665,11 +667,20 @@ void onMove(int x, int y) {
 #if TIMER_ON == 1
 void onTimer(int v) {
 	glutTimerFunc(TIMER_PERIOD, onTimer, 0);
-	// Write your code here
 
-	// To refresh the window it calls display() function
+	if (ufoMoving) {
+		ufoX += ufoSpeedX;
+		// fabs is used for always getting positive number
+		if (ufoX > 260 - 63) //right limit + 63 is approx width of ufo
+			ufoSpeedX = -fabs(ufoSpeedX);
+		if (ufoX < -260 + 63) //left limit + 63 is approx width of ufo
+			ufoSpeedX = fabs(ufoSpeedX);
+	}
+
+	// Refresh display
 	glutPostRedisplay();
 }
+
 #endif
 
 void Init() {
