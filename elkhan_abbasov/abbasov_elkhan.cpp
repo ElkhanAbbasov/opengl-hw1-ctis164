@@ -35,6 +35,7 @@ int  winWidth, winHeight; // Current Window width and height
 // UFO Position
 float ufoX = 0;  // UFO center left/right 
 float ufoY = 0; // up/down
+bool ufoVisible = false; // hidden at the start
 float ufoSpeedX = 30;
 bool ufoMoving = false; 
 
@@ -284,6 +285,7 @@ void drawAlien() {
 
 // Draw UFO 
 void drawUFO() {
+	if (!ufoVisible) return;
 	
 	// Top Dome
 	glColor3f(0.6, 0.9, 1.0);
@@ -560,6 +562,10 @@ void onKeyDown(unsigned char key, int x, int y) {
 		exit(0);
 
 	if (key == ' ') {
+		if (!ufoVisible) {
+			ufoVisible = true;
+			ufoX = -260 + 70;
+		}
 		ufoMoving = !ufoMoving;
 	}
 
@@ -671,9 +677,9 @@ void onTimer(int v) {
 	if (ufoMoving) {
 		ufoX += ufoSpeedX;
 		// fabs is used for always getting positive number
-		if (ufoX > 260 - 63) //right limit + 63 is approx width of ufo
+		if (ufoX > 260 - 67) //approx width of ufo from right is limit - 67
 			ufoSpeedX = -fabs(ufoSpeedX);
-		if (ufoX < -260 + 63) //left limit + 63 is approx width of ufo
+		if (ufoX < -260 + 71) //approx width of ufo from left is limit + 71
 			ufoSpeedX = fabs(ufoSpeedX);
 	}
 
@@ -697,7 +703,7 @@ int main(int argc, char* argv[]) {
 		(glutGet(GLUT_SCREEN_WIDTH) - WINDOW_WIDTH) / 2,
 		(glutGet(GLUT_SCREEN_HEIGHT) - WINDOW_HEIGHT) / 2 - 50
 	);
-	glutCreateWindow("Abbasov Elkhan");
+	glutCreateWindow("Abbasov Elkhan CTIS164 HW1 - UFO ");
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(onResize);
