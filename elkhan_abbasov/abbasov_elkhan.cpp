@@ -32,12 +32,20 @@ ADDITIONAL FEATURES :
 // Global Variables for Template File
 bool up = false, down = false, right = false, left = false;
 int  winWidth, winHeight; // Current Window width and height
-// UFO Position
+
+// UFO Vars
 float ufoX = 0;  // UFO center left/right 
 float ufoY = 0; // up/down
 bool ufoVisible = false; // hidden at the start
 float ufoSpeedX = 30;
 bool ufoMoving = false; 
+bool laserActive = false;  
+
+//Cow vars
+bool cowAbducted = false;  
+float cowX = 100;          
+float cowY = -110;         
+float cowSpeedY = 6;       
 
 
 // To draw a filled circle, centered at (x,y) with radius r
@@ -138,6 +146,9 @@ void drawFlowerWithStem(float x, float stemBottom, float r, float red, float gre
 }
 
 void drawCow() {
+
+	if (cowAbducted && cowY >= ufoY) return;
+
 	glColor3f(1.0, 1.0, 1.0);  // White body
 	glBegin(GL_QUADS);
 	glVertex2f(90, -110); 
@@ -205,7 +216,6 @@ void drawCow() {
 	glVertex2f(110, -110); glVertex2f(108, -110);
 	glEnd();
 }
-
 
 
 void drawAlien() {
@@ -281,6 +291,7 @@ void drawAlien() {
 	glVertex2f(ufoX + 3, ufoY + 4);
 	glVertex2f(ufoX - 3, ufoY + 4);
 	glEnd();
+
 }
 
 // Draw UFO 
@@ -327,6 +338,15 @@ void drawUFO() {
 	glVertex2f(ufoX - 20, ufoY - 15);
 	glEnd();
 
+	//laser
+	if (laserActive) {
+		glColor3f(1.0, 0.0, 0.0);
+		glLineWidth(20);
+		glBegin(GL_LINES);
+		glVertex2f(ufoX, ufoY - 10);
+		glVertex2f(cowX, cowY + 5);
+		glEnd();
+	}
 	
 }
 
@@ -674,6 +694,8 @@ void onMove(int x, int y) {
 void onTimer(int v) {
 	glutTimerFunc(TIMER_PERIOD, onTimer, 0);
 
+	static int laserTimer = 0;
+
 	if (ufoMoving) {
 		ufoX += ufoSpeedX;
 		// fabs is used for always getting positive number
@@ -681,6 +703,28 @@ void onTimer(int v) {
 			ufoSpeedX = -fabs(ufoSpeedX);
 		if (ufoX < -260 + 71) //approx width of ufo from left is limit + 71
 			ufoSpeedX = fabs(ufoSpeedX);
+	}
+
+	// Check if UFO is above the cow
+	// If UFO is above cow and cow is not yet abducted
+	if (!cowAbducted && fabs(ufoX - cowX) < 15) {
+		ufoMoving = false; // Stop UFO movement
+		laserActive = true;
+		cowAbducted = true; // Mark cow as abducted
+		laserTimer = 0; // Reset laser timer
+	}
+
+	if (cowAbducted) {
+		laserTimer++;
+
+		if (laserTimer > 3) { // Keep laser visible for a few cycles
+			laserActive = false; // Stop laser after delay
+		}
+
+		if (laserTimer > 4) { // Cow disappears after extra delay
+			cowY = 1000; // Move cow away 
+			ufoMoving = true; // Resume UFO movement
+		}
 	}
 
 	// Refresh display
