@@ -706,7 +706,6 @@ void onTimer(int v) {
 	}
 
 	// Check if UFO is above the cow
-	// If UFO is above cow and cow is not yet abducted
 	if (!cowAbducted && fabs(ufoX - cowX) < 15) {
 		ufoMoving = false; // Stop UFO movement
 		laserActive = true;
@@ -717,11 +716,11 @@ void onTimer(int v) {
 	if (cowAbducted) {
 		laserTimer++;
 
-		if (laserTimer > 3) { // Keep laser visible for a few cycles
-			laserActive = false; // Stop laser after delay
+		if (laserTimer > 3) { // Keep laser visible for 3 seconds
+			laserActive = false; 
 		}
 
-		if (laserTimer > 4) { // Cow disappears after extra delay
+		if (laserTimer > 4) { // Cow disappears after 4 sesconds
 			cowY = 1000; // Move cow away 
 			ufoMoving = true; // Resume UFO movement
 		}
