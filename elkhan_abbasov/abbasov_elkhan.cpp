@@ -8,8 +8,14 @@ HOMEWORK : 1
 -----------------------------------
 PROBLEMS : Wanted to add blinking stars
 -----------------------------------
-ADDITIONAL FEATURES :  1. Added laser beam to destroy the cow 
-					   2. Added curtains to open and close on the mouse click
+ADDITIONAL FEATURES :  
+1. Laser beam to destroy the cow 
+2. Curtains to open and close on the mouse click
+3. Blinking stars
+
+Press:
+1) F1 to start animation
+2) Space to stop UFO
 **********************************/
 
 #ifdef _MSC_VER
@@ -40,7 +46,8 @@ float ufoY = 0; // up/down
 bool ufoVisible = false; // hidden at the start
 float ufoSpeedX = 30;
 bool ufoMoving = false; 
-bool laserActive = false;  
+bool laserActive = false;
+static int laserTimer = 0;  
 static bool wasMovingBeforeAbduction = false; //to stop ufo after abduction
 
 //Cow vars
@@ -57,6 +64,8 @@ bool rightCurtainVisible = false;
 float leftWindowXStart = -275, leftWindowXEnd = -20;  // Left window pos
 float rightWindowXStart = 20, rightWindowXEnd = 275;  // Right window pos
 
+// Star vars
+static bool toggleStarColor = false;
 
 
 // To draw a filled circle, centered at (x,y) with radius r
@@ -363,7 +372,11 @@ void drawUFO() {
 
 // Stars
 void drawStars() {
-	glColor3f(1.0, 1.0, 1.0);
+	if (toggleStarColor)
+		glColor3f(1.0, 1.0, 1.0); // White
+	else
+		glColor3f(230.0, 255.0, 0.0); // Yellow
+
 	glPointSize(2); 
 
 	glBegin(GL_POINTS);
@@ -820,7 +833,8 @@ void onMove(int x, int y) {
 void onTimer(int v) {
 	glutTimerFunc(TIMER_PERIOD, onTimer, 0);
 
-	static int laserTimer = 0;
+	 // Toggle between white and yellow
+	toggleStarColor = !toggleStarColor; // Switch color each timer tick
 
 	if (ufoMoving) {
 		ufoX += ufoSpeedX;
