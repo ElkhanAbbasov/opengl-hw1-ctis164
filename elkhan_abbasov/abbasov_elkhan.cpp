@@ -6,9 +6,10 @@ STUDENT ID : 22101458
 SECTION :  3
 HOMEWORK : 1
 -----------------------------------
-PROBLEMS :
+PROBLEMS : Wanted to add blinking stars
 -----------------------------------
-ADDITIONAL FEATURES :
+ADDITIONAL FEATURES :  1. Added laser beam to destroy the cow 
+					   2. Added curtains to open and close on the mouse click
 **********************************/
 
 #ifdef _MSC_VER
@@ -40,12 +41,22 @@ bool ufoVisible = false; // hidden at the start
 float ufoSpeedX = 30;
 bool ufoMoving = false; 
 bool laserActive = false;  
+static bool wasMovingBeforeAbduction = false; //to stop ufo after abduction
 
 //Cow vars
 bool cowAbducted = false;  
 float cowX = 100;          
 float cowY = -110;         
-float cowSpeedY = 6;       
+float cowSpeedY = 6; 
+
+//Curtion vars
+bool leftCurtainVisible = false;
+bool rightCurtainVisible = false; 
+
+// Positions for checking click areas
+float leftWindowXStart = -275, leftWindowXEnd = -20;  // Left window pos
+float rightWindowXStart = 20, rightWindowXEnd = 275;  // Right window pos
+
 
 
 // To draw a filled circle, centered at (x,y) with radius r
@@ -131,7 +142,7 @@ void drawWallpaper() {
 	glEnd();
 }
 
-void drawFlowerWithStem(float x, float stemBottom, float r, float red, float green, float blue) {
+void drawFlowerWithStem(float x, int stemBottom, float r, float red, float green, float blue) {
 	//Stem
 	glColor3f(0.0, 80.0 / 255, 0.0);
 	glLineWidth(2);
@@ -393,6 +404,50 @@ void drawStars() {
 	glEnd();
 }
 
+void drawCurtains() {
+
+	// left curtain 
+	if (leftCurtainVisible) {
+		glColor3f(151.0 / 255, 107.0 / 255, 30.0 / 255);
+		glBegin(GL_QUADS);
+		glVertex2f(-260, -160);
+		glVertex2f(-20, -160);
+		glVertex2f(-20, 60);
+		glVertex2f(-260, 60);
+		glEnd();
+
+		//outline left
+		glColor3f(0, 0, 0);
+		glLineWidth(2);
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(-260, -160);
+		glVertex2f(-20, -160);
+		glVertex2f(-20, 60);
+		glVertex2f(-260, 60);
+		glEnd();
+	}
+
+	// right curtain
+	if (rightCurtainVisible) {
+		glColor3f(151.0 / 255, 107.0 / 255, 30.0 / 255);
+		glBegin(GL_QUADS);
+		glVertex2f(20, -160);
+		glVertex2f(260, -160);
+		glVertex2f(260, 60);
+		glVertex2f(20, 60);
+		glEnd();
+
+		//outline right
+		glColor3f(0, 0, 0);
+		glLineWidth(2);
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(20, -160);
+		glVertex2f(260, -160);
+		glVertex2f(260, 60);
+		glVertex2f(20, 60);
+		glEnd();
+	}
+}
 
 // To display onto window using OpenGL commands
 void display() {
@@ -531,12 +586,12 @@ void display() {
 			glColor3f(0, 0, 0); 
 			glLineWidth(2);
 			glBegin(GL_LINES);
-			// Bottom 
-			glVertex2f(-259, -160);
-			glVertex2f(259, -160);
-			// Top 
-			glVertex2f(-259, -105);
-			glVertex2f(259, -105);
+				// Bottom 
+				glVertex2f(-259, -160);
+				glVertex2f(259, -160);
+				// Top 
+				glVertex2f(-259, -105);
+				glVertex2f(259, -105);
 			glEnd();
 
 			// Add flowers 
@@ -562,37 +617,61 @@ void display() {
 			// Inner Frame (Center Border)
 			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255);
 			glBegin(GL_QUADS);
-			glVertex2f(-20, -160);
-			glVertex2f(20, -160);
-			glVertex2f(20, 60);
-			glVertex2f(-20, 60);
+				glVertex2f(-20, -160);
+				glVertex2f(20, -160);
+				glVertex2f(20, 60);
+				glVertex2f(-20, 60);
 			glEnd();
 
 			// Outline of center border
 			glColor3f(0, 0, 0);
 			glLineWidth(2);
 			glBegin(GL_LINE_LOOP);
-			glVertex2f(0, -160);
-			glVertex2f(0, 60);
+				glVertex2f(0, -160);
+				glVertex2f(0, 60);
 			glEnd();
 			glBegin(GL_LINE_LOOP);
-			glVertex2f(-20, -160);
-			glVertex2f(20, -160);
-			glVertex2f(20, 60);
-			glVertex2f(-20, 60);
+				glVertex2f(-20, -160);
+				glVertex2f(20, -160);
+				glVertex2f(20, 60);
+				glVertex2f(-20, 60);
 			glEnd();
 
+
+			// Window handles
+				//Handles
+				glColor3f(0, 0, 0);
+				int r = 5;
+				circle(-10, -30, r);
+				circle(10, -30, r);
+				circle(-10, -60, r);
+				circle(10, -60, r);
+
+				//Lines for handles
+					glColor3f(0, 0, 0);
+					glLineWidth(4);
+					glBegin(GL_LINE_LOOP); //left
+						glVertex2f(-10, -30);
+						glVertex2f(-10, -60);
+					glEnd();
+				
+					glBegin(GL_LINE_LOOP); //right
+						glVertex2f(10, -30);
+						glVertex2f(10, -60);
+					glEnd();
 
 			//Outline for  dark night
 			glColor3f(0, 0, 0);
 			glLineWidth(2);
 			glBegin(GL_LINE_LOOP);
-			glVertex2f(-260, 60);
-			glVertex2f(260, 60);
-			glVertex2f(260, -160);
-			glVertex2f(-260, -160);
+				glVertex2f(-260, 60);
+				glVertex2f(260, 60);
+				glVertex2f(260, -160);
+				glVertex2f(-260, -160);
 			glEnd();
 
+			// Curtains (on click)
+			drawCurtains();
 
 			glutSwapBuffers();
 
@@ -605,7 +684,13 @@ void onKeyDown(unsigned char key, int x, int y) {
 		exit(0);
 
 	if (key == ' ') {
-		ufoMoving = !ufoMoving;
+		if (!cowAbducted) {
+			ufoMoving = !ufoMoving; // change state of movement if no abduction
+		}
+		else {
+			wasMovingBeforeAbduction = !wasMovingBeforeAbduction; // change state  of movement
+			ufoMoving = wasMovingBeforeAbduction;
+		}
 	}
 
 	// To refresh the window it calls display() function
@@ -680,7 +765,21 @@ void onSpecialKeyUp(int key, int x, int y) {
 //   y2 = winHeight / 2 - y1
 void onClick(int button, int stat, int x, int y) {
 	// Write your code here
+	if (button == GLUT_LEFT_BUTTON && stat == GLUT_DOWN) {
+		// Convert mouse coordinates to OpenGL coordinates
+		int x2 = x - winWidth / 2;
+		int y2 = winHeight / 2 - y;
 
+		// Check if clicked inside left window area
+		if (x2 >= leftWindowXStart && x2 <= leftWindowXEnd) {
+			leftCurtainVisible = !leftCurtainVisible;
+		}
+
+		// Check if clicked inside right window area
+		if (x2 >= rightWindowXStart && x2 <= rightWindowXEnd) {
+			rightCurtainVisible = !rightCurtainVisible;
+		}
+	}
 	// To refresh the window it calls display() function
 	glutPostRedisplay();
 }
@@ -734,6 +833,7 @@ void onTimer(int v) {
 
 	// Check if UFO is above the cow
 	if (!cowAbducted && fabs(ufoX - cowX) < 15) {
+		wasMovingBeforeAbduction = ufoMoving;
 		ufoMoving = false; // Stop UFO movement
 		laserActive = true;
 		cowAbducted = true; // Mark cow as abducted
@@ -749,7 +849,7 @@ void onTimer(int v) {
 
 		if (laserTimer > 4) { // Cow disappears after 4 sesconds
 			cowY = 1000; // Move cow away 
-			ufoMoving = true; // Resume UFO movement
+			ufoMoving = wasMovingBeforeAbduction; // Resume UFO movement
 		}
 	}
 
