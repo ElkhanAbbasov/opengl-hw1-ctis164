@@ -393,6 +393,7 @@ void drawStars() {
 	glEnd();
 }
 
+
 // To display onto window using OpenGL commands
 void display() {
 	// Clear window to black
@@ -456,7 +457,7 @@ void display() {
 
 			// Text
 			glColor3f(1.0, 1.0, 1.0);
-			vprint(-135, 170, GLUT_BITMAP_9_BY_15, "Press Space Button to See Aliens :)");
+			vprint(-135, 170, GLUT_BITMAP_9_BY_15, "Press 'F1' Button to See Alien :) ");
 
 			// Window 1
 			glColor3f(61.0 / 255, 35.0 / 255, 9.0 / 255);
@@ -517,16 +518,6 @@ void display() {
 				glVertex2f(-260, -160);
 			glEnd();
 
-			//Outline for  dark night
-			glColor3f(0, 0, 0); 
-			glLineWidth(2);
-			glBegin(GL_LINE_LOOP);
-				glVertex2f(-260, 60);   
-				glVertex2f(260, 60);    
-				glVertex2f(260, -160);  
-				glVertex2f(-260, -160); 
-			glEnd();
-
 			// Grass
 			glColor3f(0, 111.0 / 255, 0);
 			glBegin(GL_QUADS);
@@ -568,7 +559,39 @@ void display() {
 			//Stars
 			drawStars();
 
+			// Inner Frame (Center Border)
+			glColor3f(120.0 / 255, 80.0 / 255, 40.0 / 255);
+			glBegin(GL_QUADS);
+			glVertex2f(-20, -160);
+			glVertex2f(20, -160);
+			glVertex2f(20, 60);
+			glVertex2f(-20, 60);
+			glEnd();
 
+			// Outline of center border
+			glColor3f(0, 0, 0);
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(0, -160);
+			glVertex2f(0, 60);
+			glEnd();
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(-20, -160);
+			glVertex2f(20, -160);
+			glVertex2f(20, 60);
+			glVertex2f(-20, 60);
+			glEnd();
+
+
+			//Outline for  dark night
+			glColor3f(0, 0, 0);
+			glLineWidth(2);
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(-260, 60);
+			glVertex2f(260, 60);
+			glVertex2f(260, -160);
+			glVertex2f(-260, -160);
+			glEnd();
 
 
 			glutSwapBuffers();
@@ -582,10 +605,6 @@ void onKeyDown(unsigned char key, int x, int y) {
 		exit(0);
 
 	if (key == ' ') {
-		if (!ufoVisible) {
-			ufoVisible = true;
-			ufoX = -260 + 70;
-		}
 		ufoMoving = !ufoMoving;
 	}
 
@@ -618,6 +637,14 @@ void onSpecialKeyDown(int key, int x, int y) {
 	case GLUT_KEY_RIGHT:
 		right = true;
 		break;
+	}
+
+	if (key == GLUT_KEY_F1) {
+		if (!ufoVisible) {
+			ufoVisible = true;
+			ufoX = -260 + 70;
+			ufoMoving = true;
+		}
 	}
 	// To refresh the window it calls display() function
 	glutPostRedisplay();
@@ -699,9 +726,9 @@ void onTimer(int v) {
 	if (ufoMoving) {
 		ufoX += ufoSpeedX;
 		// fabs is used for always getting positive number
-		if (ufoX > 260 - 67) //approx width of ufo from right is limit - 67
+		if (ufoX > 260 - 67) //approx width of ufo from right is center - 67
 			ufoSpeedX = -fabs(ufoSpeedX);
-		if (ufoX < -260 + 71) //approx width of ufo from left is limit + 71
+		if (ufoX < -260 + 71) //approx width of ufo from left is center + 71
 			ufoSpeedX = fabs(ufoSpeedX);
 	}
 
