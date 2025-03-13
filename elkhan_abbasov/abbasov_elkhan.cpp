@@ -5,13 +5,13 @@ NAME SURNAME : Elkhan Abbasov
 STUDENT ID : 22101458
 SECTION :  3
 HOMEWORK : 1
------------------------------------
+---------------------------------------------------------------------------------------------------------
 PROBLEMS : I don’t think that was a problem. However, at the start, 
 		   I made the UFO invisible, and only after pressing F1 did 
 		   it become visible and start moving. But due to the PDF 
 		   requirements, I changed that. If you want, you can't uncomment
 		   statement on onSpecialKeyDown() function and it will work.
------------------------------------
+---------------------------------------------------------------------------------------------------------
 ADDITIONAL FEATURES :  
 1. Laser beam to destroy the cow 
 2. Curtains to open and close on the mouse click
