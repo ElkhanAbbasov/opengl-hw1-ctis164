@@ -6,12 +6,17 @@ STUDENT ID : 22101458
 SECTION :  3
 HOMEWORK : 1
 -----------------------------------
-PROBLEMS : Wanted to add blinking stars
+PROBLEMS : I don’t think that was a problem. However, at the start, 
+		   I made the UFO invisible, and only after pressing F1 did 
+		   it become visible and start moving. But due to the PDF 
+		   requirements, I changed that. If you want, you can't uncomment
+		   statement on onSpecialKeyDown() function and it will work.
 -----------------------------------
 ADDITIONAL FEATURES :  
 1. Laser beam to destroy the cow 
 2. Curtains to open and close on the mouse click
 3. Blinking stars
+4. Edited onResize() function to keep the ratio of objects when we try to shrink or resize the window
 
 Press:
 1) F1 to start animation
@@ -41,9 +46,10 @@ bool up = false, down = false, right = false, left = false;
 int  winWidth, winHeight; // Current Window width and height
 
 // UFO Vars
-float ufoX = 0;  // UFO center left/right 
+float ufoX = -260 + 70;  // UFO center left/right 
 float ufoY = 0; // up/down
-bool ufoVisible = false; // hidden at the start
+bool ufoVisible = true; //make it false t0 hide at the start  also uncomment statement on onSpecialKeyDown() function
+bool f1Pressed = false;
 float ufoSpeedX = 30;
 bool ufoMoving = false; 
 bool laserActive = false;
@@ -696,7 +702,7 @@ void onKeyDown(unsigned char key, int x, int y) {
 	if (key == 27)
 		exit(0);
 
-	if (key == ' ') {
+	if (key == ' ' && f1Pressed) {
 		if (!cowAbducted) {
 			ufoMoving = !ufoMoving; // change state of movement if no abduction
 		}
@@ -736,13 +742,20 @@ void onSpecialKeyDown(int key, int x, int y) {
 		right = true;
 		break;
 	}
-
-	if (key == GLUT_KEY_F1) {
+	
+	// I was talking about this part to make UFO invisible at start (You needed to press F1 to make it visible). 
+	// If you uncomment this part do not forget to comment the code under it.
+	/*if (key == GLUT_KEY_F1) {
 		if (!ufoVisible) {
 			ufoVisible = true;
 			ufoX = -260 + 70;
 			ufoMoving = true;
 		}
+	}*/
+
+	if (key == GLUT_KEY_F1) {
+		ufoMoving = true;
+		f1Pressed = true;
 	}
 	// To refresh the window it calls display() function
 	glutPostRedisplay();
@@ -804,11 +817,18 @@ void onResize(int w, int h) {
 	winWidth = w;
 	winHeight = h;
 	glViewport(0, 0, w, h);
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glOrtho(-w / 2, w / 2, -h / 2, h / 2, -1, 1);
+
+	float aspect = (float)w / (float)h;
+	float scaleFactor = (w < h) ? (float)w / WINDOW_WIDTH : (float)h / WINDOW_HEIGHT;
+
+	glOrtho(-400 * scaleFactor, 400 * scaleFactor, -300 * scaleFactor, 300 * scaleFactor, -1, 1);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
 	display(); // Refresh window.
 }
 
