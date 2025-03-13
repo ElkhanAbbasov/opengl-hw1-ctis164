@@ -525,7 +525,7 @@ void display() {
 
 			// Text
 			glColor3f(1.0, 1.0, 1.0);
-			vprint(-135, 170, GLUT_BITMAP_9_BY_15, "Press 'F1' Button to See Alien :) ");
+			vprint(-60, 170, GLUT_BITMAP_9_BY_15, "Elkhan Abbasov");
 
 			// Window 1
 			glColor3f(61.0 / 255, 35.0 / 255, 9.0 / 255);
