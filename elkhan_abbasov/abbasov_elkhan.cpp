@@ -11,6 +11,10 @@ PROBLEMS : I don’t think that was a problem. However, at the start,
 		   it become visible and start moving. But due to the PDF 
 		   requirements, I changed that. If you want, you can't uncomment
 		   statement on onSpecialKeyDown() function and it will work.
+		   My main problem was that I read the requirements later and just 
+		   followed the video you posted. I wrote that when Space's pressed 
+		   UFO should stop and then continue moving, but I changed it to stop 
+		   and restart to correctly meet the requirements. (You can also uncomment that part)
 ---------------------------------------------------------------------------------------------------------
 ADDITIONAL FEATURES :  
 1. Laser beam to destroy the cow 
@@ -702,13 +706,26 @@ void onKeyDown(unsigned char key, int x, int y) {
 	if (key == 27)
 		exit(0);
 
-	if (key == ' ' && f1Pressed) {
-		if (!cowAbducted) {
-			ufoMoving = !ufoMoving; // change state of movement if no abduction
-		}
-		else {
-			wasMovingBeforeAbduction = !wasMovingBeforeAbduction; // change state  of movement
-			ufoMoving = wasMovingBeforeAbduction;
+	// To stop/start ufo movement from where it was stopped
+	//if (key == ' ' && f1Pressed) {
+	//	if (!cowAbducted) {
+	//		ufoMoving = !ufoMoving; // change state of movement if no abduction
+	//	}
+	//	else {
+	//		wasMovingBeforeAbduction = !wasMovingBeforeAbduction; // change state  of movement
+	//		ufoMoving = wasMovingBeforeAbduction;
+	//	}
+	//}
+
+	if (key == ' ') { 
+		if (f1Pressed) { 
+			if (ufoMoving) {  // If UFO is currently moving → Stop it
+				ufoMoving = false;
+			}
+			else {  // If UFO is already stopped → Reset & Restart it
+				ufoX = -260 + 70;  // Reset UFo position
+				ufoMoving = true;  // Restart movement
+			}
 		}
 	}
 
